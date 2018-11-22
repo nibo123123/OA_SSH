@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<class name="chencj.cc.oa.entity.Reply" table="t_reply">
+		<id name="id" type="java.lang.Long">
+			<column name="id"  length="32"/>
+			<generator class="native"></generator>
+		</id>
+		<many-to-one name="author" class="chencj.cc.oa.entity.User" column="userId"/>
+		<property name="content" type="java.lang.String">
+			<column name="content" length="256" ></column>
+		</property>
+
+		<property name="ipAddress" type="java.lang.String">
+			<column name="ipAddress" length="256" ></column>
+		</property>
+		<property name="postTime" type="java.util.Date">
+			<column name="postTime"  ></column>
+		</property>
+		<property name="deletes" type="java.lang.Integer"/>
+		<many-to-one name="topic" class="chencj.cc.oa.entity.Topic" column="topicId"/>
+	</class>
+	
+</hibernate-mapping>

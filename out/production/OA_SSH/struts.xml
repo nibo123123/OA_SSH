@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.devMode" value="false" />
+    <!-- 将对象工厂指定为spring -->
+    <constant name="struts.objectFactory" value="spring"/>
+    <!-- struts的Action访问后缀 -->
+    <constant name="struts.action.extension" value="do"/>
+    <!-- 指定表单主题 -->
+	<constant name="struts.ui.theme" value="simple"/>
+    <package name="default" namespace="/" extends="struts-default">
+   		
+   		<interceptors>
+    		<interceptor name="loginIntercept" class="chencj.cc.oa.intercept.LoginIntercept"></interceptor>
+    		<interceptor-stack name="newStack">
+    			<interceptor-ref name="loginIntercept"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	<default-interceptor-ref name="newStack"></default-interceptor-ref>
+   		
+   		
+   		<global-results>
+   			<result name="login" type="redirect">/login.jsp</result>
+   		</global-results>
+   		<!-- 全局异常映射 -->
+   		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.RuntimeException">
+
+
+			</exception-mapping>
+		</global-exception-mappings>
+		<!-- 用户列表显示 -->
+    	<action name="userAction_*" class="userAction" method="{1}">
+    		<result name="list">/WEB-INF/jsp/user/list.jsp</result>
+    		<result name="edit">/WEB-INF/jsp/user/save.jsp</result>
+    		<result name="toList" type="redirectAction">
+    			<param name="actionName">userAction_list</param>
+    			<param name="namespace">/</param>
+    		</result>
+    		
+    		<result name="index" type="redirectAction">
+    			<param name="actionName">homeAction_index</param>
+    			<param name="namespace">/</param>
+    		</result>
+    		<result name="add">/WEB-INF/jsp/user/save.jsp</result>
+    	</action>
+	    <!-- 部门信息显示 -->	
+    	<action name="departmentAction_*" class="departmentAction" method="{1}">
+    		<result name="list">/WEB-INF/jsp/department/list.jsp</result>
+    		<result name="save">/WEB-INF/jsp/department/save.jsp</result>
+    		<result name="edit">/WEB-INF/jsp/department/edit.jsp</result>
+    		<result name="toList" type="redirectAction">
+    			<param name="actionName">departmentAction_list?departmentPartnetId=${departmentPartnetId}</param>
+    			<param name="namespace">/</param>
+    		</result>
+    	</action>
+    	<!-- 岗位信息显示 -->	
+    	<action name="roleAction_*" class="roleAction" method="{1}">
+    		<result name="list">/WEB-INF/jsp/role/list.jsp</result>
+    		<result name="edit">/WEB-INF/jsp/role/edit.jsp</result>
+    		<result name="toList" type="redirectAction">
+    			<param name="actionName">roleAction_list</param>
+    			<param name="namespace">/</param>
+    		</result>
+    		<result name="add">/WEB-INF/jsp/role/add.jsp</result>
+    		<result name="setPrivilege">/WEB-INF/jsp/role/setPrivilegeUI.jsp</result>
+    	</action>
+    	<!-- 主页跳转 -->
+    	<action name="homeAction_*" class="homeAction" method="{1}">
+    		<result name="top">/WEB-INF/jsp/home/top.jsp</result>
+    		<result name="bottom">/WEB-INF/jsp/home/bottom.jsp</result>
+    		<result name="right">/WEB-INF/jsp/home/right.jsp</result>
+    		<result name="index">/WEB-INF/jsp/home/index.jsp</result>
+    		<result name="left">/WEB-INF/jsp/home/left.jsp</result>
+    	</action>
+
+		<!-- 论坛管理跳转 -->
+		<action name="forumManageAction_*" class="forumManageAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/forumManage/list.jsp</result>
+			<result name="save">/WEB-INF/jsp/forumManage/save.jsp</result>
+			<result name="toList" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">forumManageAction_list</param>
+			</result>
+		</action>
+
+		<!-- 论坛跳转 -->
+		<action name="forumAction_*" class="forumAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/forum/list.jsp</result>
+			<result name="save">/WEB-INF/jsp/forum/save.jsp</result>
+			<result name="show">/WEB-INF/jsp/forum/show.jsp</result>
+			<result name="toList" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">forumAction_list</param>
+			</result>
+		</action>
+
+		<!-- 主题跳转 -->
+		<action name="topicAction_*" class="topicAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/topic/list.jsp</result>
+			<result name="add">/WEB-INF/jsp/topic/add.jsp</result>
+			<result name="show">/WEB-INF/jsp/topic/show.jsp</result>
+			<result name="toList" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">forumAction_list</param>
+			</result>
+		</action>
+
+
+		<!-- 回复跳转 -->
+		<action name="replyAction_*" class="replyAction" method="{1}">
+			<result name="add">/WEB-INF/jsp/reply/add.jsp</result>
+
+			<result name="toShow" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">topicAction_show</param>
+			</result>
+		</action>
+
+
+    </package>
+    
+    
+</struts>

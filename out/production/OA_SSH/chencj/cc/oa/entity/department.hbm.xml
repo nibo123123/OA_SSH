@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<class name="chencj.cc.oa.entity.Department" table="t_department">
+		<id name="de_id" type="java.lang.Long">
+			<column name="departmentId"  length="32"/>
+			<generator class="native"></generator>
+		</id>
+		<property name="de_name" type="java.lang.String">
+			<column name="departmentName" length="32" />
+		</property>
+		<property name="de_description" type="java.lang.String">
+			<column name="departmentDescription" length="256" ></column>
+		</property>
+		
+		<!-- 自关 联 多个下级表对应一个上级表  多对一 -->
+		<many-to-one name="de_parent" class="chencj.cc.oa.entity.Department" column="departmentParentId"></many-to-one>
+		<!-- 自关联 一个上级表多个下级表 一对多 -->
+		<set name="de_children">
+			<key column="departmentParentId"/>
+			<one-to-many class="chencj.cc.oa.entity.Department"/>
+		</set>
+		
+		
+		<!-- 一个部门表，多个用户表 -->
+		<set name="users">
+			<key column="departmentId"/>
+			<one-to-many class="chencj.cc.oa.entity.User"/>
+		</set>
+	</class>
+	
+</hibernate-mapping>

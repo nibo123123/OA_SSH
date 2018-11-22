@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<class name="chencj.cc.oa.entity.Privilege" table="t_privilege">
+		<id name="priId" type="java.lang.Long">
+			<column name="priId"  length="32"/>
+			<generator class="native"></generator>
+		</id>
+		<property name="priName" type="java.lang.String">
+			<column name="priName" length="32" />
+		</property>
+		<property name="priUrl" type="java.lang.String">
+			<column name="priUrl" length="128" ></column>
+		</property>
+		
+		<!-- 自关 联 多个下级表对应一个上级表  多对一 -->
+		<many-to-one name="priParent" class="chencj.cc.oa.entity.Privilege" column="priParentId"></many-to-one>
+		<!-- 自关联 一个上级表多个下级表 一对多 -->
+		<set name="PriChildren" lazy="false">
+			<key column="priParentId"/>
+			<one-to-many class="chencj.cc.oa.entity.Privilege"/>
+		</set>
+		
+		
+		<!-- 一个部门表，多个用户表 -->
+		<set name="roles" table="role_privilege">
+			<key column="priId"/>
+			<many-to-many class="chencj.cc.oa.entity.Role" column="roleId"></many-to-many>
+		</set>
+	</class>
+	
+</hibernate-mapping>

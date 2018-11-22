@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<class name="chencj.cc.oa.entity.Role" table="t_role">
+		<id name="role_id" type="java.lang.Long">
+			<column name="roleId"  length="32"/>
+			<generator class="native"></generator>
+		</id>
+		<property name="role_name" type="java.lang.String">
+			<column name="roleName" length="32" />
+		</property>
+		
+		
+		
+		<property name="role_description" type="java.lang.String">
+			<column name="roleDescription" length="256" ></column>
+		</property>
+		
+		<set name="users" table="role_user">
+			<key column="roleId"/>
+			<many-to-many class="chencj.cc.oa.entity.User" column="userId"/>
+		</set>
+		
+		<set name="privileges" table="role_privilege" lazy="false">
+			<key column="roleId"/>
+			<many-to-many class="chencj.cc.oa.entity.Privilege" column="priId"/>
+		</set>
+		
+		
+		
+	</class>
+	
+</hibernate-mapping>

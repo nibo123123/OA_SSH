@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<class name="chencj.cc.oa.entity.Topic" table="t_topic">
+		<id name="id" type="java.lang.Long">
+			<column name="id"  length="32"/>
+			<generator class="native"></generator>
+		</id>
+
+		<property name="title" type="java.lang.String">
+			<column name="title" length="256" ></column>
+		</property>
+		<property name="content" type="java.lang.String">
+			<column name="content" length="256" ></column>
+		</property>
+
+		<property name="ipAddress" type="java.lang.String">
+			<column name="ipAddress" length="256" ></column>
+		</property>
+		<property name="postTime" type="java.util.Date">
+			<column name="postTime"  ></column>
+		</property>
+		<property name="lastUpdateTime" type="java.util.Date">
+			<column name="lastUpdateTime"  ></column>
+		</property>
+		<property name="type" type="java.lang.Integer">
+			<column name="type"  ></column>
+		</property>
+
+		<property name="replyCount" type="java.lang.Integer" column="replyCount"/>
+
+		<many-to-one name="author" class="chencj.cc.oa.entity.User" column="userId" lazy="false"/>
+
+		<!--一个主题表对应多个回复表-->
+		<set name="replies">
+			<key column="topicId"/>
+			<one-to-many class="chencj.cc.oa.entity.Reply"/>
+		</set>
+
+		<!--多个主题表对应一个论坛表-->
+		<many-to-one name="forum" class="chencj.cc.oa.entity.ForumManage" column="forumManageId"/>
+
+		<!--配置主题表和lastreply-->
+
+		<many-to-one name="lastReply" class="chencj.cc.oa.entity.Reply" column="replyId"/>
+
+		<!-- 自关 联 多个下级表对应一个上级表  多对一 -->
+		<!--<many-to-one name="de_parent" class="chencj.cc.oa.entity.Department" column="departmentParentId"></many-to-one>-->
+		<!-- 自关联 一个上级表多个下级表 一对多 -->
+		<!--<set name="de_children">
+			<key column="departmentParentId"/>
+			<one-to-many class="chencj.cc.oa.entity.Department"/>
+		</set>-->
+		
+		
+		<!-- 一个部门表，多个用户表 -->
+		<!--<set name="users">
+			<key column="departmentId"/>
+			<one-to-many class="chencj.cc.oa.entity.User"/>
+		</set>-->
+	</class>
+	
+</hibernate-mapping>

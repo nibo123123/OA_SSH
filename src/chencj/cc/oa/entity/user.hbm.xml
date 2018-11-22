@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	
+	<class name="chencj.cc.oa.entity.User" table="t_user">
+		<id name="user_id" type="java.lang.Long">
+			<column name="userId"  length="32"/>
+			<generator class="native"></generator>
+		</id>
+		<property name="user_name" type="java.lang.String">
+			<column name="userName" length="32" />
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="password" length="32" ></column>
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="email" length="32" ></column>
+		</property>
+		<property name="sex" type="java.lang.String">
+			<column name="sex" length="2" ></column>
+		</property>
+		<property name="description" type="java.lang.String">
+			<column name="description" length="256" ></column>
+		</property>
+		<property name="telephone" type="java.lang.String">
+			<column name="telephone" length="32" ></column>
+		</property>
+		<property name="login_name" type="java.lang.String">
+			<column name="loginName" length="32" ></column>
+		</property>
+		<!-- 多个用户表对应一个部门表 多对一 -->
+		<many-to-one name="department" class="chencj.cc.oa.entity.Department" column="departmentId"></many-to-one>
+		<!-- 一个用户表 对应多个智能表 多对多 -->
+		<set name="roles" table="role_user" lazy="false">
+			<key column="userId"/>
+			<many-to-many class="chencj.cc.oa.entity.Role" column="roleId"/>
+		</set>
+		
+		
+		
+	</class>
+	
+</hibernate-mapping>
